@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017, Optimizely
+ * Copyright 2017, 2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -145,5 +145,23 @@ class FeatureFlag
     public function setVariables($variables)
     {
         $this->_variables = ConfigParser::generateMap($variables, null, FeatureVariable::class);
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+        $serialize = function($item) {
+            return $item->__toString();
+        };
+
+        return "FeatureFlag{" .
+            "id='" . $this->getId() . '\'' .
+            ", key='" . $this->getKey() . '\'' .
+            ", rolloutId='" . $this->getRolloutId() . '\'' .
+            ", experimentIds=" . json_encode($this->getExperimentIds()) .
+            ", variables=" . json_encode(array_map($serialize, $this->getVariables())) .
+            '}';
     }
 }

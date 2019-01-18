@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016, 2018, Optimizely
+ * Copyright 2016, 2018-2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -320,5 +320,27 @@ class Experiment
     {
         $forcedVariations = $this->getForcedVariations();
         return !is_null($forcedVariations) && isset($forcedVariations[$userId]);
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+        $serialize = function($item) {
+            return $item->__toString();
+        };
+
+         return "Experiment{" .
+             "id='" . $this->getId() . '\'' .
+             ", key='" . $this->getKey() . '\'' .
+             ", layerId='" . $this->getLayerId() . '\'' .
+             ", status='" . $this->getStatus() . '\'' .
+             ", audienceIds=" . json_encode($this->getAudienceIds()) .
+             ", audienceConditions=" . json_encode($this->getAudienceConditions()) .
+             ", variations=" . json_encode(array_map($serialize, $this->getVariations())) .
+             ", forcedVariations=" . json_encode($this->getForcedVariations()) .
+             ", trafficAllocation=" . json_encode(array_map($serialize, $this->getTrafficAllocation())) .
+             '}';
     }
 }

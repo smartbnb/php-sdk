@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017, Optimizely
+ * Copyright 2017, 2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,5 +72,20 @@ class Rollout
     public function setExperiments($experiments)
     {
         $this->_experiments = ConfigParser::generateMap($experiments, null, Experiment::class);
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+         $serialize = function($item) {
+            return $item->__toString();
+         };
+
+         return "Rollout{" .
+             "id='" . $this->getId() . '\'' .
+             ", experiments=" . json_encode(array_map($serialize, $this->getExperiments())) .
+             '}';
     }
 }

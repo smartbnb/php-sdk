@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017, Optimizely
+ * Copyright 2017, 2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,5 +131,18 @@ class FeatureVariable
     public function setDefaultValue($value)
     {
         $this->_defaultValue = $value;
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+        return "FeatureVariable{" .
+            "id='" . $this->getId() . '\'' .
+            ", key='" . $this->getKey() . '\'' .
+            ", type='" . $this->getType() . '\'' .
+            ", defaultValue='" . $this->getDefaultValue() . '\'' .
+            '}';
     }
 }

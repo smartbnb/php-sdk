@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016-2018, Optimizely
+ * Copyright 2016-2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -148,5 +148,22 @@ class Variation
                 $this->_variableIdToVariableUsageInstanceMap[$variableUsage->getId()] = $variableUsage;
             }
         }
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+         $serialize = function($item) {
+            return $item->__toString();
+         };
+
+         return "Variation{" .
+             "id='" . $this->getId() . '\'' .
+             ", key='" . $this->getKey() . '\'' .
+             ", featureEnabled=" . var_export($this->getFeatureEnabled(), true) .
+             ", variableUsageInstances=" . json_encode(array_map($serialize, $this->_variableUsageInstances)) .
+             '}';
     }
 }

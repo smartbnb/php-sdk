@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016, Optimizely
+ * Copyright 2016, 2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,5 +66,16 @@ class Attribute
     public function setKey($key)
     {
         $this->_key = $key;
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+      return "Attribute{" .
+          "id='" . $this->getId() . '\'' .
+          ", key='" . $this->getKey() . '\'' .
+          '}';
     }
 }

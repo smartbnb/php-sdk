@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2017, Optimizely
+ * Copyright 2017, 2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,5 +70,16 @@ class VariableUsage
     public function setValue($value)
     {
         $this->_value = $value;
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+         return "Variable{" .
+             "id='" . $this->getId() . '\'' .
+             ", value='" . $this->getValue() . '\'' .
+             '}';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016, Optimizely
+ * Copyright 2016, 2019, Optimizely
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,5 +112,22 @@ class Group
     public function setTrafficAllocation($trafficAllocation)
     {
         $this->_trafficAllocation = ConfigParser::generateMap($trafficAllocation, null, TrafficAllocation::class);
+    }
+
+    /**
+     * @return string Instance representation as string object.
+     */
+    public function __toString()
+    {
+         $serialize = function($item) {
+            return $item->__toString();
+         };
+
+         return "Group{" .
+             "id='" . $this->getId() . '\'' .
+             ", policy='" . $this->getPolicy() . '\'' .
+             ", experiments=" . json_encode($this->getExperiments()) .
+             ", trafficAllocation=" . json_encode(array_map($serialize, $this->getTrafficAllocation())) .
+             '}';
     }
 }
