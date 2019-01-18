@@ -19,13 +19,14 @@ namespace Optimizely\Logger;
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Psr\Log\AbstractLogger;
 
 /**
  * Class DefaultLogger
  *
  * @package Optimizely\Logger
  */
-class DefaultLogger implements LoggerInterface
+class DefaultLogger extends AbstractLogger
 {
     /**
      * @var Logger Logger instance.
@@ -47,7 +48,7 @@ class DefaultLogger implements LoggerInterface
         $this->logger->pushHandler($streamHandler);
     }
 
-    public function log($logLevel, $logMessage)
+    public function log($logLevel, $logMessage, $context = array())
     {
         $this->logger->log($logLevel, $logMessage);
     }

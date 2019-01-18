@@ -39,11 +39,11 @@ use Optimizely\Exceptions\InvalidFeatureVariableException;
 use Optimizely\Exceptions\InvalidGroupException;
 use Optimizely\Exceptions\InvalidRolloutException;
 use Optimizely\Exceptions\InvalidVariationException;
-use Optimizely\Logger\LoggerInterface;
 use Optimizely\Utils\ConditionDecoder;
 use Optimizely\Utils\ConfigParser;
 use Optimizely\Utils\Errors;
 use Optimizely\Utils\Validator;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ProjectConfig

@@ -26,7 +26,6 @@ use Optimizely\Exceptions\InvalidAttributeException;
 use Optimizely\Exceptions\InvalidDatafileVersionException;
 use Optimizely\Exceptions\InvalidEventTagException;
 use Optimizely\Exceptions\InvalidInputException;
-use Optimizely\Logger\NoOpLogger;
 use Optimizely\Notification\NotificationCenter;
 use Optimizely\Notification\NotificationType;
 use Optimizely\ProjectConfig;
@@ -35,6 +34,8 @@ use Optimizely\ErrorHandler\DefaultErrorHandler;
 use Optimizely\Event\Builder\EventBuilder;
 use Optimizely\Logger\DefaultLogger;
 use Optimizely\Optimizely;
+use Psr\Log\NullLogger;
+use Psr\Log\LogLevel;
 
 class OptimizelyTest extends \PHPUnit_Framework_TestCase
 {
@@ -58,7 +59,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
         $this->experimentKey = 'test_experiment';
 
         // Mock Logger
-        $this->loggerMock = $this->getMockBuilder(NoOpLogger::class)
+        $this->loggerMock = $this->getMockBuilder(NullLogger::class)
             ->setMethods(array('log'))
             ->getMock();
         $this->optimizelyObject = new Optimizely($this->datafile, null, $this->loggerMock);
@@ -1142,7 +1143,7 @@ class OptimizelyTest extends \PHPUnit_Framework_TestCase
 
         $this->loggerMock->expects($this->at(1))
             ->method('log')
-            ->with(Logger::INFO, 'Not tracking user "test_user" for event "unknown_key".');
+            ->with(LogLevel::INFO, 'Not tracking user "test_user" for event "unknown_key".');
 
         $this->optimizelyObject->track('unknown_key', 'test_user');
     }

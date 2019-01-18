@@ -25,8 +25,7 @@ use Monolog\Logger;
 use Optimizely\ErrorHandler\ErrorHandlerInterface;
 use Optimizely\Exceptions\InvalidCallbackArgumentCountException;
 use Optimizely\Exceptions\InvalidNotificationTypeException;
-use Optimizely\Logger\LoggerInterface;
-use Optimizely\Logger\NoOpLogger;
+use Psr\Log\LoggerInterface;
 
 class NotificationCenter
 {

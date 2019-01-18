@@ -19,8 +19,7 @@ namespace Optimizely;
 use Monolog\Logger;
 use Optimizely\Entity\Experiment;
 use Optimizely\Entity\Variation;
-use Optimizely\Logger\LoggerInterface;
-
+use Psr\Log\LoggerInterface;
 /**
  * Class Bucketer
  *

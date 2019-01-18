@@ -33,14 +33,14 @@ use Optimizely\Event\Builder\EventBuilder;
 use Optimizely\Event\Dispatcher\DefaultEventDispatcher;
 use Optimizely\Event\Dispatcher\EventDispatcherInterface;
 use Optimizely\Logger\DefaultLogger;
-use Optimizely\Logger\LoggerInterface;
-use Optimizely\Logger\NoOpLogger;
 use Optimizely\Notification\NotificationCenter;
 use Optimizely\Notification\NotificationType;
 use Optimizely\UserProfile\UserProfileServiceInterface;
 use Optimizely\Utils\Errors;
 use Optimizely\Utils\Validator;
 use Optimizely\Utils\VariableTypeUtils;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Class Optimizely
@@ -116,7 +116,7 @@ class Optimizely
     ) {
         $this->_isValid = true;
         $this->_eventDispatcher = $eventDispatcher ?: new DefaultEventDispatcher();
-        $this->_logger = $logger ?: new NoOpLogger();
+        $this->_logger = $logger ?: new NullLogger();
         $this->_errorHandler = $errorHandler ?: new NoOpErrorHandler();
 
         if (!$this->validateDatafile($datafile, $skipJsonValidation)) {
@@ -313,7 +313,7 @@ class Optimizely
         $event = $this->_config->getEvent($eventKey);
 
         if (is_null($event->getKey())) {
-            $this->_logger->log(Logger::INFO, sprintf('Not tracking user "%s" for event "%s".', $userId, $eventKey));
+            $this->_logger->info(sprintf('Not tracking user "%s" for event "%s".', $userId, $eventKey));
             return;
         }
 

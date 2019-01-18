@@ -20,7 +20,7 @@ namespace Optimizely\Utils;
 use Exception;
 use Monolog\Logger;
 use Optimizely\Entity\FeatureVariable;
-use Optimizely\Logger\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class VariableTypeUtils
 {
