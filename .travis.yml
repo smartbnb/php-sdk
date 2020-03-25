@@ -1,12 +1,13 @@
 language: php
 dist: trusty
 php:
+  - '5.3'
   - '5.5'
-  - '5.6'
-  - '7.0'
-  - '7.1'
-  - '7.2'
-  - '7.3'
+  # - '5.6'
+  # - '7.0'
+  # - '7.1'
+  # - '7.2'
+  # - '7.3'
 install: "composer install"
 addons:
   srcclr: true
@@ -18,8 +19,8 @@ after_script: "vendor/bin/php-coveralls -v"
 # Linting and integration tests need to run first to reset the PR build status to pending
 stages:
   - 'Linting'
-  - 'Integration tests'
-  - 'Benchmarking tests'
+  # - 'Integration tests'
+  # - 'Benchmarking tests'
   - 'Test'
 
 jobs:
@@ -31,18 +32,18 @@ jobs:
       script: 'composer lint'
       after_script: skip
       after_success: travis_terminate 0
-    - &integrationtest
-      stage: 'Integration tests'
-      merge_mode: replace
-      env: SDK=php SDK_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
-      cache: false
-      language: minimal
-      install: skip
-      before_script:
-        - mkdir $HOME/travisci-tools && pushd $HOME/travisci-tools && git init && git pull https://$CI_USER_TOKEN@github.com/optimizely/travisci-tools.git && popd
-      script:
-        - $HOME/travisci-tools/trigger-script-with-status-update.sh
-      after_success: travis_terminate 0
-    - <<: *integrationtest
-      stage: 'Benchmarking tests'
-      env: SDK=php FULLSTACK_TEST_REPO=Benchmarking SDK_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
+    # - &integrationtest
+    #   stage: 'Integration tests'
+    #   merge_mode: replace
+    #   env: SDK=php SDK_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
+    #   cache: false
+    #   language: minimal
+    #   install: skip
+    #   before_script:
+    #     - mkdir $HOME/travisci-tools && pushd $HOME/travisci-tools && git init && git pull https://$CI_USER_TOKEN@github.com/optimizely/travisci-tools.git && popd
+    #   script:
+    #     - $HOME/travisci-tools/trigger-script-with-status-update.sh
+    #   after_success: travis_terminate 0
+    # - <<: *integrationtest
+    #   stage: 'Benchmarking tests'
+    #   env: SDK=php FULLSTACK_TEST_REPO=Benchmarking SDK_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
